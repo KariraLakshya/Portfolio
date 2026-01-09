@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cyber-black: #0a0e27;
+  --color-cyber-dark: #16213e;
+  --color-cyber-blue: #0f3460;
+  --color-cyber-cyan: #10b981;
+  --color-cyber-magenta: #34d399;
+  --color-cyber-green: #86efac;
+  --color-cyber-purple: #059669;
+  --color-cyber-pink: #6ee7b7;
+
+  --font-family-mono: "JetBrains Mono", "Fira Code", monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-mono);
+  background-color: var(--color-cyber-black);
+  color: #e5e7eb;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cyber-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-cyber-cyan);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-cyber-magenta);
+}
+
+/* Glitch Effect */
+@keyframes glitch {
+
+  0%,
+  100% {
+    transform: translate(0);
+  }
+
+  33% {
+    transform: translate(-2px, 2px);
+    filter: hue-rotate(90deg);
+  }
+
+  66% {
+    transform: translate(2px, -2px);
+    filter: hue-rotate(-90deg);
+  }
+}
+
+.glitch {
+  animation: glitch 0.3s infinite;
+}
+
+/* Scanline Effect */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(transparent, var(--color-cyber-cyan), transparent);
+  opacity: 0.1;
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Typing Cursor */
+@keyframes blink {
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 10px;
+  height: 20px;
+  background-color: var(--color-cyber-cyan);
+  margin-left: 5px;
+  animation: blink 1s infinite;
+}
+
+/* Glow Text */
+.glow-text {
+  text-shadow:
+    0 0 5px var(--color-cyber-cyan),
+    0 0 10px var(--color-cyber-cyan),
+    0 0 20px var(--color-cyber-cyan);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-cyber-purple);
+  color: white;
+}
+
+::-moz-selection {
+  background-color: var(--color-cyber-purple);
+  color: white;
+}
+
+/* Links */
+a {
+  color: var(--color-cyber-cyan);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  color: var(--color-cyber-magenta);
+  text-shadow: 0 0 10px var(--color-cyber-magenta);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body {
+    cursor: auto;
+  }
+}
