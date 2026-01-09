@@ -49,7 +49,7 @@ function App() {
           <footer className="bg-cyber-dark/50 border-t border-cyber-cyan/20 flex items-center justify-center py-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
               <p className="text-gray-400">
-                © 2026 Lakshya Karira. Built with React, TypeScript & Tailwind CSS
+                © 2026 Lakshya Karira.
               </p>
               <p className="text-cyber-cyan mt-2 text-sm">
                 <span className="text-cyber-magenta">&lt;</span>
