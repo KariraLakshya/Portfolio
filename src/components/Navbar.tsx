@@ -1,103 +1,99 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
 
-export const Navbar = () => {
-    const [activeSection, setActiveSection] = useState('home');
-    const [scrolled, setScrolled] = useState(false);
+const navLinks = [
+  { label: "Projects", href: "#projects" },
+  { label: "Skills", href: "#skills" },
+  { label: "Achievements", href: "#achievements" },
+  { label: "Education", href: "#education" },
+  { label: "Contact", href: "#contact" }
+];
 
-    const navItems = [
-        { id: 'home', label: 'Home' },
-        { id: 'about', label: 'About' },
-        { id: 'skills', label: 'Skills' },
-        { id: 'projects', label: 'Projects' },
-        { id: 'achievements', label: 'Achievements' },
-        { id: 'contact', label: 'Contact' },
-    ];
+const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
-
-            // Update active section based on scroll position
-            const sections = navItems.map(item => document.getElementById(item.id));
-            const scrollPosition = window.scrollY + 100;
-
-            sections.forEach((section, index) => {
-                if (section) {
-                    const top = section.offsetTop;
-                    const bottom = top + section.offsetHeight;
-                    if (scrollPosition >= top && scrollPosition < bottom) {
-                        setActiveSection(navItems[index].id);
-                    }
-                }
-            });
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    const scrollToSection = (sectionId: string) => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
     };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    return (
-        <motion.nav
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled
-                ? 'bg-cyber-dark/80 backdrop-blur-md border-b border-cyber-cyan/20'
-                : 'bg-transparent'
-                }`}
-        >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16">
-                    {/* Logo */}
-                    <motion.div
-                        className="text-2xl font-bold text-cyber-cyan glow-text cursor-pointer"
-                        whileHover={{ scale: 1.05 }}
-                        onClick={() => scrollToSection('home')}
-                    >
-                        {'<LK />'}
-                    </motion.div>
+  return (
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-background/80 backdrop-blur-lg border-b border-border/50' 
+          : 'bg-transparent'
+      }`}
+    >
+      <nav className="max-w-5xl mx-auto px-6 md:px-12 lg:px-24 py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <a 
+            href="#" 
+            className="font-mono text-lg font-bold hover:text-primary transition-colors"
+          >
+            <span className="text-primary">&lt;</span>
+            LK
+            <span className="text-primary">/&gt;</span>
+          </a>
 
-                    {/* Navigation Links */}
-                    <div className="hidden md:flex items-center gap-8">
-                        {navItems.map((item) => (
-                            <button
-                                key={item.id}
-                                onClick={() => scrollToSection(item.id)}
-                                className={`relative px-3 py-2 text-sm font-medium transition-colors ${activeSection === item.id
-                                    ? 'text-cyber-cyan'
-                                    : 'text-gray-300 hover:text-cyber-cyan'
-                                    }`}
-                            >
-                                {item.label}
-                                {activeSection === item.id && (
-                                    <motion.div
-                                        layoutId="activeSection"
-                                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-cyber-cyan"
-                                        initial={false}
-                                        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                                    />
-                                )}
-                            </button>
-                        ))}
-                    </div>
+          {/* Desktop nav */}
+          <ul className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <li key={link.label}>
+                <a 
+                  href={link.href}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors relative group font-mono"
+                >
+                  {link.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+                </a>
+              </li>
+            ))}
+          </ul>
 
-                    {/* Mobile Menu Button */}
-                    <div className="md:hidden">
-                        <button className="text-cyber-cyan p-2">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </motion.nav>
-    );
+          {/* Mobile menu button */}
+          <button 
+            className="md:hidden p-2 hover:bg-secondary rounded-lg transition-colors"
+            onClick={() => setIsMobileOpen(!isMobileOpen)}
+          >
+            {isMobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
+
+        {/* Mobile nav */}
+        {isMobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="md:hidden mt-4 pb-4 border-t border-border pt-4"
+          >
+            <ul className="flex flex-col gap-4">
+              {navLinks.map((link) => (
+                <li key={link.label}>
+                  <a 
+                    href={link.href}
+                    className="block text-muted-foreground hover:text-foreground transition-colors font-mono"
+                    onClick={() => setIsMobileOpen(false)}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </nav>
+    </motion.header>
+  );
 };
+
+export default Navbar;

@@ -1,91 +1,175 @@
-import { motion } from 'framer-motion';
-import { portfolioData } from '../data/portfolio';
+import { motion } from "framer-motion";
+import { ExternalLink, Github, ArrowRight } from "lucide-react";
 
-const ProjectCard = ({ project, index }: { project: typeof portfolioData.projects[0]; index: number }) => {
-    const projectIcons: Record<string, string> = {
-        'Apex — MLOps Auto-Trainer': '🤖',
-        'Smart Park': '🅿️',
-        'Image Captioning Model': '🖼️',
-    };
+const projects = [
+  {
+    title: "Apex MLOps Auto-Trainer",
+    subtitle: "Configuration-Driven MLOps Platform",
+    description: "End-to-end MLOps platform orchestrating training, evaluation, and deployment pipelines with GitHub Actions as serverless automation engine.",
+    highlights: [
+      "Containerized models with Docker",
+      "Data drift monitoring",
+      "React + Node.js dashboard",
+      "Pipeline lifecycle tracking"
+    ],
+    tags: ["React", "Node.js", "Docker", "GitHub Actions", "MLOps"],
+    color: "primary"
+  },
+  {
+    title: "Privacy Sentinel",
+    subtitle: "Aadhaar Anomaly Detection System",
+    description: "Hybrid Anomaly Detection Engine combining Z-Score analysis with Isolation Forest to detect behavioral anomalies in digital identity systems.",
+    highlights: [
+      "Analyzed 4.9M records",
+      "GPU-accelerated (NVIDIA Tesla P100)",
+      "1.55% critical-risk detection",
+      "Privacy-preserving governance"
+    ],
+    tags: ["Python", "React", "Vite", "Recharts", "ML"],
+    color: "accent"
+  },
+  {
+    title: "Smart Park",
+    subtitle: "Real-Time Parking Reservation System",
+    description: "Full-stack parking reservation system with concurrent slot booking and secure REST APIs designed for production scalability.",
+    highlights: [
+      "Node.js + Express backend",
+      "MongoDB integration",
+      "Concurrent booking handling",
+      "Scalable database schemas"
+    ],
+    tags: ["Node.js", "Express", "MongoDB", "REST API"],
+    color: "primary"
+  }
+];
 
-    return (
+const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: number }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.15 }}
+      viewport={{ once: true, margin: "-50px" }}
+      className="group relative"
+    >
+      <div className="relative rounded-xl border border-border bg-card p-6 md:p-8 transition-all duration-500 hover:border-primary/50 card-gradient overflow-hidden">
+        {/* Glow effect on hover */}
+        <div 
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{
+            background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), hsl(var(--${project.color}) / 0.06), transparent 40%)`
+          }}
+        />
+        
+        {/* Line number decoration */}
+        <div className="absolute left-0 top-0 bottom-0 w-12 border-r border-border/50 hidden md:flex flex-col items-center py-8 text-xs font-mono text-muted-foreground/50">
+          {Array.from({ length: 12 }, (_, i) => (
+            <span key={i} className="leading-6">{String(i + 1).padStart(2, '0')}</span>
+          ))}
+        </div>
+
+        <div className="md:pl-8">
+          {/* Header */}
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <span className="font-mono text-xs text-primary mb-2 block">
+                {`// project_0${index + 1}`}
+              </span>
+              <h3 className="text-2xl font-bold mb-1 group-hover:text-primary transition-colors">
+                {project.title}
+              </h3>
+              <p className="text-muted-foreground font-mono text-sm">
+                {project.subtitle}
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <button className="p-2 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-primary">
+                <Github className="w-5 h-5" />
+              </button>
+              <button className="p-2 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-primary">
+                <ExternalLink className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Description */}
+          <p className="text-muted-foreground mb-6 leading-relaxed">
+            {project.description}
+          </p>
+
+          {/* Highlights */}
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
+            {project.highlights.map((highlight, i) => (
+              <li key={i} className="flex items-center gap-2 text-sm">
+                <ArrowRight className="w-3 h-3 text-primary flex-shrink-0" />
+                <span className="text-foreground/80">{highlight}</span>
+              </li>
+            ))}
+          </ul>
+
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span 
+                key={tag}
+                className="px-2 py-1 text-xs font-mono rounded bg-secondary text-muted-foreground"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const Projects = () => {
+  return (
+    <section id="projects" className="py-24 px-6 md:px-12 lg:px-24">
+      <div className="max-w-5xl mx-auto">
+        {/* Section header */}
         <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.2 }}
-            viewport={{ once: true }}
-            whileHover={{ y: -10, scale: 1.02 }}
-            className="bg-gradient-to-br from-cyber-dark/80 to-cyber-dark/50 backdrop-blur-sm border border-cyber-cyan/30 rounded-lg overflow-hidden hover:shadow-xl hover:shadow-cyber-cyan/20 hover:border-cyber-cyan/50 transition-all duration-300 flex flex-col h-full mx-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="mb-16"
         >
-            {/* Project Content */}
-            <div className="p-6 flex-1 flex flex-col">
-                {/* Icon and Title */}
-                <div className="flex items-center gap-3 mb-3">
-                    <div className="text-3xl">{projectIcons[project.name] || '💻'}</div>
-                    <h3 className="text-xl font-bold text-cyber-cyan">{project.name}</h3>
-                </div>
-
-                <p className="text-gray-300 mb-4 leading-relaxed text-sm flex-1">{project.description}</p>
-
-                {/* Tech Stack */}
-                <div className="mb-4">
-                    <h4 className="text-xs font-semibold text-cyber-green mb-2">Tech Stack:</h4>
-                    <div className="flex flex-wrap gap-2">
-                        {project.tech.map((tech, idx) => (
-                            <span
-                                key={idx}
-                                className="px-2 py-1 bg-cyber-black/50 border border-cyber-purple/30 text-cyber-purple rounded text-xs"
-                            >
-                                {tech}
-                            </span>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Links */}
-                <div className="flex gap-3">
-                    <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full px-4 py-3 bg-transparent border-2 border-cyber-green text-cyber-green rounded hover:bg-cyber-green hover:text-cyber-black transition-all duration-300 flex items-center justify-center gap-2 font-medium"
-                    >
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-                        </svg>
-                        View on GitHub
-                    </a>
-                </div>
-            </div>
+          <div className="font-mono text-sm text-muted-foreground mb-2">
+            <span className="text-code-purple">class</span>{" "}
+            <span className="text-primary">Projects</span>{" "}
+            <span className="text-muted-foreground">{"{"}</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            Featured Work
+          </h2>
+          <p className="text-muted-foreground text-lg max-w-2xl">
+            A collection of projects showcasing my expertise in full-stack development,
+            machine learning, and building scalable systems.
+          </p>
         </motion.div>
-    );
+
+        {/* Projects grid */}
+        <div className="space-y-8">
+          {projects.map((project, index) => (
+            <ProjectCard key={project.title} project={project} index={index} />
+          ))}
+        </div>
+
+        {/* Section footer */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="mt-8 font-mono text-sm text-muted-foreground"
+        >
+          <span>{"}"}</span>
+        </motion.div>
+      </div>
+    </section>
+  );
 };
 
-export const Projects = () => {
-    return (
-        <section id="projects" className="min-h-screen flex items-center justify-center py-20 bg-cyber-dark/20">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                >
-                    {/* Section Title */}
-                    <h2 className="text-4xl md:text-5xl font-bold text-cyber-cyan mb-16 text-center">
-                        <span className="text-cyber-magenta">&lt;</span>
-                        Projects
-                        <span className="text-cyber-magenta"> /&gt;</span>
-                    </h2>
-
-                    {/* Projects Grid - Vertical List */}
-                    <div className="flex flex-col gap-6 max-w-4xl mx-auto">
-                        {portfolioData.projects.map((project, index) => (
-                            <ProjectCard key={project.name} project={project} index={index} />
-                        ))}
-                    </div>
-                </motion.div>
-            </div>
-        </section>
-    );
-};
+export default Projects;

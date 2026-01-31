@@ -1,88 +1,107 @@
-import { motion } from 'framer-motion';
-import { portfolioData } from '../data/portfolio';
+import { motion } from "framer-motion";
 
-const SkillColumn = ({ title, skills, delay }: { title: string; skills: string[]; delay: number }) => {
-    return (
+const skillCategories = [
+  {
+    title: "ML & Deep Learning",
+    icon: "🧠",
+    skills: ["PyTorch", "Transformers", "Scikit-learn", "NumPy", "Pandas", "TensorFlow"]
+  },
+  {
+    title: "NLP & AI",
+    icon: "🤖",
+    skills: ["Tokenization", "TF-IDF", "Word Embeddings", "BERT", "Attention Mechanisms", "Text Classification"]
+  },
+  {
+    title: "MLOps & Backend",
+    icon: "⚙️",
+    skills: ["FastAPI", "Docker", "GitHub Actions", "REST APIs", "Model Deployment", "Data Pipelines"]
+  },
+  {
+    title: "Full Stack",
+    icon: "</>",
+    skills: ["Python", "JavaScript", "React.js", "Node.js", "MongoDB", "Express.js"]
+  }
+];
+
+const Skills = () => {
+  return (
+    <section id="skills" className="py-24 px-6 md:px-12 lg:px-24 relative">
+      {/* Background accent */}
+      <div 
+        className="absolute inset-0 opacity-30"
+        style={{ background: "radial-gradient(ellipse at bottom, hsl(var(--primary) / 0.05), transparent 50%)" }}
+      />
+
+      <div className="max-w-5xl mx-auto relative z-10">
+        {/* Section header */}
         <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay }}
-            viewport={{ once: true }}
-            className="space-y-3"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="mb-16"
         >
-            <h3 className="text-lg font-bold text-cyber-cyan mb-4 pb-2 border-b border-cyber-cyan/30">
-                {title}
-            </h3>
-            <ul className="space-y-2">
-                {skills.map((skill, index) => (
-                    <motion.li
-                        key={skill}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.4, delay: delay + (index * 0.05) }}
-                        viewport={{ once: true }}
-                        className="text-gray-300 flex items-center gap-2 group"
-                    >
-                        <span className="w-1.5 h-1.5 bg-cyber-green rounded-full group-hover:scale-150 transition-transform"></span>
-                        <span className="group-hover:text-cyber-green transition-colors">{skill}</span>
-                    </motion.li>
-                ))}
-            </ul>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            Tech Stack
+          </h2>
+          <p className="text-muted-foreground text-lg max-w-2xl">
+            Technologies and tools I use to bring ideas to life.
+          </p>
         </motion.div>
-    );
-};
 
-export const Skills = () => {
-    const skillCategories = [
-        {
-            title: 'Languages',
-            skills: portfolioData.skills.languages,
-        },
-        {
-            title: 'Full Stack Development',
-            skills: portfolioData.skills.fullStack,
-        },
-        {
-            title: 'Machine Learning',
-            skills: portfolioData.skills.machineLearning,
-        },
-        {
-            title: 'Tools & Concepts',
-            skills: [...portfolioData.skills.tools, ...portfolioData.skills.concepts],
-        },
-    ];
-
-    return (
-        <section id="skills" className="min-h-screen flex items-center justify-center py-20">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
+        {/* Skills grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {skillCategories.map((category, categoryIndex) => (
+            <motion.div
+              key={category.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              className="rounded-xl border border-border bg-card/50 p-6 hover:border-primary/30 transition-all duration-300"
+            >
+              <div className="flex items-center gap-3 mb-5">
+                <span className="text-2xl font-mono text-primary">{category.icon}</span>
+                <h3 className="text-xl font-semibold">{category.title}</h3>
+              </div>
+              
+              <div className="flex flex-wrap gap-2">
+                {category.skills.map((skill, skillIndex) => (
+                  <motion.span
+                    key={skill}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ 
+                      duration: 0.3, 
+                      delay: categoryIndex * 0.1 + skillIndex * 0.05 
+                    }}
                     viewport={{ once: true }}
-                >
-                    {/* Section Title */}
-                    <h2 className="text-4xl md:text-5xl font-bold text-cyber-cyan mb-4 text-center">
-                        <span className="text-cyber-magenta">&lt;</span>
-                        Skills
-                        <span className="text-cyber-magenta"> /&gt;</span>
-                    </h2>
+                    className="skill-tag"
+                  >
+                    {skill}
+                  </motion.span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
-                    <p className="text-gray-400 mb-12 text-center">Technologies I work with</p>
-
-                    {/* Skills in Vertical Lists - 4 columns */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {skillCategories.map((category, index) => (
-                            <SkillColumn
-                                key={category.title}
-                                title={category.title}
-                                skills={category.skills}
-                                delay={index * 0.1}
-                            />
-                        ))}
-                    </div>
-                </motion.div>
-            </div>
-        </section>
-    );
+        {/* DSA note */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="mt-8 p-4 rounded-lg border border-border/50 bg-secondary/30"
+        >
+          <p className="font-mono text-sm text-muted-foreground">
+            <span className="text-code-purple">+</span>{" "}
+            Strong foundation in <span className="text-primary">Data Structures and Algorithms</span>
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  );
 };
+
+export default Skills;
