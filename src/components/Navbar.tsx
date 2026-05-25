@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
+  { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
-  { label: "Achievements", href: "#achievements" },
-  { label: "Education", href: "#education" },
-  { label: "Contact", href: "#contact" }
+  { label: "Background", href: "#achievements" },
+  { label: "Contact", href: "#contact" },
 ];
 
 const Navbar = () => {
@@ -27,9 +27,9 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-background/80 backdrop-blur-lg border-b border-border/50' 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled
+          ? 'bg-background/70 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_1px_0_0_hsl(215_28%_17%/0.8)]'
           : 'bg-transparent'
       }`}
     >

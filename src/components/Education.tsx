@@ -36,12 +36,7 @@ const Education = () => {
           viewport={{ once: true }}
           className="mb-16"
         >
-          <div className="font-mono text-sm text-muted-foreground mb-2">
-            <span className="text-code-purple">import</span>{" "}
-            <span className="text-primary">{"{ Education }"}</span>{" "}
-            <span className="text-code-purple">from</span>{" "}
-            <span className="text-code-orange">"./journey"</span>;
-          </div>
+          <span className="section-label">Academic Background</span>
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Education
           </h2>
