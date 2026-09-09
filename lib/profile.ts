@@ -12,7 +12,7 @@ export const profile = {
   githubHandle: "KariraLakshya",
   linkedin: "https://linkedin.com/in/lakshya-karira",
   linkedinHandle: "lakshya-karira",
-  resume: "/resume.pdf",
+  resume: "https://drive.google.com/file/d/1Et7RtkDXoktx0imvmDpogRXXKlKJMokZ/view?usp=drive_link",
   photo: "/profile-photo.jpeg",
 } as const;
 
