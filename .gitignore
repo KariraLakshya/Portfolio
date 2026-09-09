@@ -35,3 +35,4 @@ yarn-error.log*
 
 # archive of the pre-rewrite site
 previous_version/
+public/resume.pdf
